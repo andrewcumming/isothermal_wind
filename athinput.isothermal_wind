@@ -1,0 +1,65 @@
+<comment>
+problem   = Isothermal wind
+reference = 
+configure = --prob=isothermal_wind --coord=spherical_polar -hdf5 --hdf5_path /opt/homebrew -mpi --eos isothermal
+
+<job>
+problem_id = out/isowind        # problem ID: basename of output filenames
+
+<output1>
+file_type   = hdf5       # Tabular data dump
+variable    = prim      # variables to be output
+dt          = 0.2 # time increment between outputs
+
+<output2>
+file_type   = hst              # History data dump
+dt          = 0.2     # time increment between outputs
+
+<time>
+cfl_number = 0.3     # The Courant, Friedrichs, & Lewy (CFL) Number
+nlim       = -1  # cycle limit
+tlim       = 40.0   # time limit
+ncycle_out = 1000
+integrator  = rk2       # time integration algorithm
+xorder      = 2         # order of spatial reconstruction
+
+<mesh>
+nx1         = 1024 # Number of zones in X1-direction
+x1min       = 0.1    # minimum value of X1
+x1max       = 10.0   #7.0617       # maximum value of X1
+x1rat       = 1.0045073642544624  # (10/0.1)^(1/1024)
+#x1rat       = 1.0090350448414473  # (10/0.1)^(1/512)
+#x1rat       =  1.018151721718182 # (10/0.1)^(1/256)
+#x1rat       = 1.0022511482929128  # (10/0.1)^(1/2048)
+#x1rat       = 1.00112494139988  # (10/0.1)^(1/4096)
+ix1_bc      = user  # Inner-X1 boundary condition flag
+ox1_bc      = outflow   # Outer-X1 boundary condition flag
+
+nx2         = 1        # Number of zones in X2-direction
+#x2min       = 0.0      # minimum value of X2
+#x2max       = 3.1415926535897931       # maximum value of X2
+x2min       = 0.7853981633974483
+x2max       = 2.356194490192345
+ix2_bc      = periodic  # Inner-X2 boundary condition flag
+ox2_bc      = periodic  # Outer-X2 boundary condition flag
+
+nx3         = 1       # Number of zones in X3-direction
+x3min       = 0.0      # minimum value of X3
+x3max       = 6.2831853071795862       # maximum value of X3
+ix3_bc      = periodic  # Inner-X3 boundary condition flag
+ox3_bc      = periodic  # Outer-X3 boundary condition flag
+
+num_threads = 1
+
+<meshblock>
+nx1         = 32
+nx2         = 1
+nx3         = 1
+
+<hydro>
+iso_sound_speed = 1
+
+<problem>
+GM          = 2
+
+
